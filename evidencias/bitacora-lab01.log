@@ -1,0 +1,170 @@
+2026-11-19 02:57:01.759 GMT [10952] LOG:  database system was shut down at 2026-11-18 23:45:20 GMT
+2026-11-19 03:02:01.736 GMT [10928] LOG:  checkpoint starting: time
+2026-11-19 03:02:03.707 GMT [10928] LOG:  checkpoint complete: wrote 21 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=1.954 s, sync=0.009 s, total=1.973 s; sync files=17, longest=0.002 s, average=0.001 s; distance=108 kB, estimate=108 kB; lsn=0/5439D80, redo lsn=0/5439D48
+2026-11-19 03:07:41.584 GMT [5892] FATAL:  database "comercial" does not exist
+2026-11-19 03:07:55.761 GMT [25152] ERROR:  syntax error at or near ":" at character 26
+2026-11-19 03:07:55.761 GMT [25152] STATEMENT:  CREATE DATABASE comercial:
+	CREATE DATABASE comercial;
+2026-11-19 03:12:01.724 GMT [10928] LOG:  checkpoint starting: time
+2026-11-19 03:13:47.327 GMT [10928] LOG:  checkpoint complete: wrote 972 buffers (5.9%); 0 WAL file(s) added, 0 removed, 0 recycled; write=105.471 s, sync=0.118 s, total=105.604 s; sync files=300, longest=0.004 s, average=0.001 s; distance=4561 kB, estimate=4561 kB; lsn=0/58AE2A0, redo lsn=0/58AE268
+2026-11-19 03:19:22.907 GMT [15480] ERROR:  syntax error at or near "SELECT" at character 24
+2026-11-19 03:19:22.907 GMT [15480] STATEMENT:  SELECT * FROM clientes
+	SELECT * FROM clientes;
+2026-11-19 03:22:01.358 GMT [10928] LOG:  checkpoint starting: time
+2026-11-19 03:22:07.265 GMT [10928] LOG:  checkpoint complete: wrote 55 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=5.883 s, sync=0.016 s, total=5.907 s; sync files=42, longest=0.001 s, average=0.001 s; distance=163 kB, estimate=4121 kB; lsn=0/58D70B0, redo lsn=0/58D7078
+2026-11-19 03:27:01.274 GMT [10928] LOG:  checkpoint starting: time
+2026-11-19 03:27:04.454 GMT [10928] LOG:  checkpoint complete: wrote 30 buffers (0.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=3.137 s, sync=0.024 s, total=3.180 s; sync files=26, longest=0.011 s, average=0.001 s; distance=113 kB, estimate=3720 kB; lsn=0/58F3778, redo lsn=0/58F3740
+2026-11-19 03:28:25.254 GMT [4468] FATAL:  password authentication failed for user "app_ventas"
+2026-11-19 03:28:25.254 GMT [4468] DETAIL:  Connection matched file "C:/Program Files/PostgreSQL/16/data/pg_hba.conf" line 115: "host    all             all             127.0.0.1/32            scram-sha-256"
+2026-11-19 03:28:31.035 GMT [15832] FATAL:  password authentication failed for user "app_ventas"
+2026-11-19 03:28:31.035 GMT [15832] DETAIL:  Connection matched file "C:/Program Files/PostgreSQL/16/data/pg_hba.conf" line 115: "host    all             all             127.0.0.1/32            scram-sha-256"
+2026-11-19 03:28:48.443 GMT [20596] FATAL:  password authentication failed for user "app_ventas"
+2026-11-19 03:28:48.443 GMT [20596] DETAIL:  Connection matched file "C:/Program Files/PostgreSQL/16/data/pg_hba.conf" line 115: "host    all             all             127.0.0.1/32            scram-sha-256"
+2026-11-19 03:29:09.476 GMT [22224] FATAL:  password authentication failed for user "app_ventas"
+2026-11-19 03:29:09.476 GMT [22224] DETAIL:  Connection matched file "C:/Program Files/PostgreSQL/16/data/pg_hba.conf" line 115: "host    all             all             127.0.0.1/32            scram-sha-256"
+2026-11-19 03:31:10.274 GMT [15480] ERROR:  syntax error at or near "SELECT" at character 90
+2026-11-19 03:31:10.274 GMT [15480] STATEMENT:  SELECT linea FROM dba.bitacora WHERE linea ILIKE '%update%' OR linea LIKE '%app_ventas%'
+	SELECT linea FROM dba.bitacora WHERE linea ILIKE '%update%' OR linea LIKE '%app_ventas%';
+2026-11-19 03:32:01.460 GMT [10928] LOG:  checkpoint starting: time
+2026-11-19 03:32:02.025 GMT [10928] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.542 s, sync=0.004 s, total=0.565 s; sync files=6, longest=0.002 s, average=0.001 s; distance=5 kB, estimate=3349 kB; lsn=0/58F4B78, redo lsn=0/58F4B40
+2026-11-19 05:52:36.674 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: ALTER SYSTEM SET logging_collector = on;
+2026-11-19 05:52:36.746 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: CREATE SCHEMA IF NOT EXISTS dba;
+2026-11-19 05:52:36.750 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: REVOKE ALL ON SCHEMA dba FROM PUBLIC;
+2026-11-19 05:52:36.751 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: CREATE OR REPLACE VIEW dba.bitacora AS
+	SELECT t.n AS num, rtrim(t.linea, E'\r') AS linea
+	FROM regexp_split_to_table(pg_read_file(pg_current_logfile()), E'\n')
+	WITH ORDINALITY AS t(linea, n)
+	WHERE rtrim(t.linea, E'\r') <> '';
+2026-11-19 05:53:24.740 GMT [15480] user=postgres db=comercial app=psql client=::1 ERROR:  syntax error at or near "name" at character 63
+2026-11-19 05:53:24.740 GMT [15480] user=postgres db=comercial app=psql client=::1 STATEMENT:  SELECT name, setting, source, sourcefileFROM pg_settingsWHERE name IN ('log_connections', 'log_line_prefix', 'log_statement');
+2026-11-19 05:55:32.122 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: ALTER SYSTEM SET log_connections = on;
+2026-11-19 05:56:05.067 GMT [15480] user=postgres db=comercial app=psql client=::1 ERROR:  column "source" does not exist at character 23
+2026-11-19 05:56:05.067 GMT [15480] user=postgres db=comercial app=psql client=::1 STATEMENT:  SELECT name, setting, source, sourcefile FROM pg_file_settings WHERE name IN ('log_connections', 'log_disconnections', 'log_line_prefix', 'log_statement');
+2026-11-19 05:56:37.153 GMT [10928] user= db= app= client= LOG:  checkpoint starting: time
+2026-11-19 05:56:38.502 GMT [10928] user= db= app= client= LOG:  checkpoint complete: wrote 13 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=1.309 s, sync=0.021 s, total=1.350 s; sync files=10, longest=0.014 s, average=0.003 s; distance=39 kB, estimate=3018 kB; lsn=0/58FEA18, redo lsn=0/58FE9E0
+2026-11-19 05:57:14.079 GMT [15480] user=postgres db=comercial app=psql client=::1 ERROR:  syntax error at or near "psql" at character 1
+2026-11-19 05:57:14.079 GMT [15480] user=postgres db=comercial app=psql client=::1 STATEMENT:  psql -c "SELECT 1" "postgresql://app_ventas:incorrecta@127.0.0.1/comercial"
+	psql -c "SELECT 1" "postgresql://usuario_inexistente:x@127.0.0.1/comercial"
+	psql -c "SELECT count(*) FROM clientes" "postgresql://app_ventas:Ventas_Practica_2026@127.0.0.1/comercial?application_name=app-ventas-web"
+	SELECT linea FROM dba.bitacora WHERE linea LIKE '%client=127.0.0.1%' ORDER BY num DESC LIMIT 12;
+2026-11-19 05:57:32.527 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: REVOKE UPDATE ON clientes FROM soporte_ana;
+2026-11-19 05:57:32.529 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: GRANT UPDATE ON clientes TO app_ventas;
+2026-11-19 05:57:32.531 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: ALTER TABLE clientes ADD COLUMN segmento VARCHAR(20);
+2026-11-19 05:57:32.534 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: CREATE ROLE rol_temporal LOGIN PASSWORD '<REDACTED>';
+2026-11-19 05:57:33.314 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: DROP ROLE rol_temporal;
+2026-11-19 06:01:37.507 GMT [10928] user= db= app= client= LOG:  checkpoint starting: time
+2026-11-19 06:01:38.614 GMT [10928] user= db= app= client= LOG:  checkpoint complete: wrote 11 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=1.080 s, sync=0.021 s, total=1.107 s; sync files=10, longest=0.014 s, average=0.003 s; distance=27 kB, estimate=2719 kB; lsn=0/5905680, redo lsn=0/5905648
+2026-11-19 06:03:13.588 GMT [15480] user=postgres db=comercial app=psql client=::1 ERROR:  syntax error at or near "psql" at character 1
+2026-11-19 06:03:13.588 GMT [15480] user=postgres db=comercial app=psql client=::1 STATEMENT:  psql -c "UPDATE clientes SET rfc = 'GAMA780912XYZ' WHERE id = 3" "postgresql://app_ventas:Ventas_Practica_2026@127.0.0.1/comercial?application_name=app-ventas-web"
+	ALTER SYSTEM SET log_statement = 'mod';
+2026-11-19 06:03:33.628 GMT [15480] user=postgres db=comercial app=psql client=::1 ERROR:  syntax error at or near "psql" at character 1
+2026-11-19 06:03:33.628 GMT [15480] user=postgres db=comercial app=psql client=::1 STATEMENT:  psql -c "UPDATE clientes SET telefono = '6679990000' WHERE id = 3" -c "SELECT nombre, rfc FROM clientes WHERE id = 3" "postgresql://app_ventas:Ventas_Practica_2026@127.0.0.1/comercial?application_name=app-ventas-web"
+	SELECT linea FROM dba.bitacora WHERE linea LIKE '%log_statement%' OR linea LIKE '%user=app_ventas%statement:%' ORDER BY num DESC LIMIT 6;
+2026-11-19 06:03:56.752 GMT [15480] user=postgres db=comercial app=psql client=::1 ERROR:  syntax error at or near "psql" at character 1
+2026-11-19 06:03:56.752 GMT [15480] user=postgres db=comercial app=psql client=::1 STATEMENT:  psql -c "DELETE FROM clientes WHERE id = 5" "postgresql://soporte_ana:Soporte_Practica_2026@127.0.0.1/comercial"
+	DROP ROLE soporte_ana;
+2026-11-19 06:03:58.398 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: DROP ROLE soporte_ana;
+2026-11-19 06:03:58.413 GMT [15480] user=postgres db=comercial app=psql client=::1 ERROR:  role "soporte_ana" cannot be dropped because some objects depend on it
+2026-11-19 06:03:58.413 GMT [15480] user=postgres db=comercial app=psql client=::1 DETAIL:  privileges for table clientes
+2026-11-19 06:03:58.413 GMT [15480] user=postgres db=comercial app=psql client=::1 STATEMENT:  DROP ROLE soporte_ana;
+2026-11-19 06:04:54.693 GMT [20008] user=[unknown] db=[unknown] app=[unknown] client=127.0.0.1 LOG:  connection received: host=127.0.0.1 port=49748
+2026-11-19 06:04:54.705 GMT [20008] user=soporte_ana db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authenticated: identity="soporte_ana" method=scram-sha-256 (C:/Program Files/PostgreSQL/16/data/pg_hba.conf:115)
+2026-11-19 06:04:54.705 GMT [20008] user=soporte_ana db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authorized: user=soporte_ana database=comercial application_name=reporte-mensual
+2026-11-19 06:05:07.565 GMT [15480] user=postgres db=comercial app=psql client=::1 ERROR:  syntax error at or near "psql" at character 1
+2026-11-19 06:05:07.565 GMT [15480] user=postgres db=comercial app=psql client=::1 STATEMENT:  psql -c "SELECT pg_sleep(30)" "postgresql://soporte_ana:Soporte_Practica_2026@127.0.0.1/comercial?application_name=reporte-mensual"
+	SELECT pid, usename, application_name, client_addr, backend_start, state, left(query, 30) AS query
+	FROM pg_stat_activity
+	WHERE backend_type = 'client backend';
+2026-11-19 06:05:09.066 GMT [15480] user=postgres db=comercial app=psql client=::1 ERROR:  syntax error at or near "WHERE" at character 1
+2026-11-19 06:05:09.066 GMT [15480] user=postgres db=comercial app=psql client=::1 STATEMENT:  WHERE backend_type = 'client backend';
+2026-11-19 06:05:14.303 GMT [15480] user=postgres db=comercial app=psql client=::1 ERROR:  syntax error at or near "pg_stat_activityWHERE" at character 104
+2026-11-19 06:05:14.303 GMT [15480] user=postgres db=comercial app=psql client=::1 STATEMENT:  SELECT pid, usename, application_name, client_addr, backend_start, state, left(query, 30) AS queryFROM pg_stat_activityWHERE backend_type = 'client backend';
+2026-11-19 06:05:24.774 GMT [20008] user=soporte_ana db=comercial app=reporte-mensual client=127.0.0.1 LOG:  disconnection: session time: 0:00:30.089 user=soporte_ana database=comercial host=127.0.0.1 port=49748
+2026-11-19 06:05:40.644 GMT [23704] user=[unknown] db=[unknown] app=[unknown] client=127.0.0.1 LOG:  connection received: host=127.0.0.1 port=57523
+2026-11-19 06:05:40.656 GMT [23704] user=soporte_ana db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authenticated: identity="soporte_ana" method=scram-sha-256 (C:/Program Files/PostgreSQL/16/data/pg_hba.conf:115)
+2026-11-19 06:05:40.656 GMT [23704] user=soporte_ana db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authorized: user=soporte_ana database=comercial application_name=reporte-mensual
+2026-11-19 06:06:10.715 GMT [23704] user=soporte_ana db=comercial app=reporte-mensual client=127.0.0.1 LOG:  disconnection: session time: 0:00:30.079 user=soporte_ana database=comercial host=127.0.0.1 port=57523
+2026-11-19 06:15:59.352 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: CREATE SCHEMA auditoria;
+2026-11-19 06:15:59.355 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: REVOKE ALL ON SCHEMA auditoria FROM PUBLIC;
+2026-11-19 06:15:59.393 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: CREATE TABLE auditoria.cambios_clientes (
+	    id_evento BIGSERIAL PRIMARY KEY,
+	    momento TIMESTAMPTZ NOT NULL DEFAULT now(),
+	    usuario_sesion TEXT NOT NULL DEFAULT session_user,
+	    usuario_efectivo TEXT NOT NULL DEFAULT current_user,
+	    aplicacion TEXT DEFAULT current_setting('application_name'),
+	    ip_cliente INET DEFAULT inet_client_addr(),
+	    operacion TEXT NOT NULL,
+	    id_cliente BIGINT,
+	    valores_antes JSONB,
+	    valores_despues JSONB
+	);
+2026-11-19 06:15:59.421 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: CREATE OR REPLACE FUNCTION auditoria.registrar_cambio_cliente()
+	RETURNS trigger
+	LANGUAGE plpgsql
+	SECURITY DEFINER
+	SET search_path = pg_catalog, public
+	AS $$
+	BEGIN
+	    IF TG_OP = 'INSERT' THEN
+	        INSERT INTO auditoria.cambios_clientes (operacion, id_cliente, valores_despues)
+	        VALUES (TG_OP, NEW.id, to_jsonb(NEW));
+	        RETURN NEW;
+	    ELSIF TG_OP = 'UPDATE' THEN
+	        INSERT INTO auditoria.cambios_clientes (operacion, id_cliente, valores_antes, valores_despues)
+	        VALUES (TG_OP, NEW.id, to_jsonb(OLD), to_jsonb(NEW));
+	        RETURN NEW;
+	    ELSIF TG_OP = 'DELETE' THEN
+	        INSERT INTO auditoria.cambios_clientes (operacion, id_cliente, valores_antes)
+	        VALUES (TG_OP, OLD.id, to_jsonb(OLD));
+	        RETURN OLD;
+	    END IF;
+	    RETURN NULL;
+	END;
+	$$;
+2026-11-19 06:15:59.443 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: REVOKE ALL ON FUNCTION auditoria.registrar_cambio_cliente() FROM PUBLIC;
+2026-11-19 06:16:01.049 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: CREATE TRIGGER trg_auditoria_clientes
+	AFTER INSERT OR UPDATE OR DELETE ON clientes
+	FOR EACH ROW EXECUTE FUNCTION auditoria.registrar_cambio_cliente();
+2026-11-19 06:16:37.397 GMT [10928] user= db= app= client= LOG:  checkpoint starting: time
+2026-11-19 06:16:44.315 GMT [10928] user= db= app= client= LOG:  checkpoint complete: wrote 64 buffers (0.4%); 0 WAL file(s) added, 0 removed, 0 recycled; write=6.864 s, sync=0.035 s, total=6.918 s; sync files=51, longest=0.014 s, average=0.001 s; distance=212 kB, estimate=2468 kB; lsn=0/593A920, redo lsn=0/593A8E8
+2026-11-19 06:18:21.342 GMT [24592] user=[unknown] db=[unknown] app=[unknown] client=127.0.0.1 LOG:  connection received: host=127.0.0.1 port=53893
+2026-11-19 06:18:21.355 GMT [24592] user=app_ventas db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authenticated: identity="app_ventas" method=scram-sha-256 (C:/Program Files/PostgreSQL/16/data/pg_hba.conf:115)
+2026-11-19 06:18:21.355 GMT [24592] user=app_ventas db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authorized: user=app_ventas database=comercial application_name=app-ventas-web
+2026-11-19 06:18:21.367 GMT [24592] user=app_ventas db=comercial app=app-ventas-web client=127.0.0.1 LOG:  disconnection: session time: 0:00:00.032 user=app_ventas database=comercial host=127.0.0.1 port=53893
+2026-11-19 06:18:22.009 GMT [11320] user=[unknown] db=[unknown] app=[unknown] client=127.0.0.1 LOG:  connection received: host=127.0.0.1 port=53894
+2026-11-19 06:18:22.022 GMT [11320] user=app_ventas db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authenticated: identity="app_ventas" method=scram-sha-256 (C:/Program Files/PostgreSQL/16/data/pg_hba.conf:115)
+2026-11-19 06:18:22.022 GMT [11320] user=app_ventas db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authorized: user=app_ventas database=comercial application_name=psql
+2026-11-19 06:18:22.028 GMT [11320] user=app_ventas db=comercial app=psql client=127.0.0.1 ERROR:  permission denied for schema auditoria at character 15
+2026-11-19 06:18:22.028 GMT [11320] user=app_ventas db=comercial app=psql client=127.0.0.1 STATEMENT:  SELECT * FROM auditoria.cambios_clientes
+2026-11-19 06:18:22.031 GMT [11320] user=app_ventas db=comercial app=psql client=127.0.0.1 LOG:  disconnection: session time: 0:00:00.029 user=app_ventas database=comercial host=127.0.0.1 port=53894
+2026-11-19 06:18:24.313 GMT [7496] user=[unknown] db=[unknown] app=[unknown] client=127.0.0.1 LOG:  connection received: host=127.0.0.1 port=53895
+2026-11-19 06:18:24.325 GMT [7496] user=app_ventas db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authenticated: identity="app_ventas" method=scram-sha-256 (C:/Program Files/PostgreSQL/16/data/pg_hba.conf:115)
+2026-11-19 06:18:24.325 GMT [7496] user=app_ventas db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authorized: user=app_ventas database=comercial application_name=psql
+2026-11-19 06:18:24.331 GMT [7496] user=app_ventas db=comercial app=psql client=127.0.0.1 ERROR:  permission denied for schema auditoria at character 15
+2026-11-19 06:18:24.331 GMT [7496] user=app_ventas db=comercial app=psql client=127.0.0.1 STATEMENT:  SELECT * FROM auditoria.cambios_clientes
+2026-11-19 06:18:24.333 GMT [7496] user=app_ventas db=comercial app=psql client=127.0.0.1 LOG:  disconnection: session time: 0:00:00.027 user=app_ventas database=comercial host=127.0.0.1 port=53895
+2026-11-19 06:19:19.313 GMT [7636] user=[unknown] db=[unknown] app=[unknown] client=127.0.0.1 LOG:  connection received: host=127.0.0.1 port=60622
+2026-11-19 06:19:19.326 GMT [7636] user=app_ventas db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authenticated: identity="app_ventas" method=scram-sha-256 (C:/Program Files/PostgreSQL/16/data/pg_hba.conf:115)
+2026-11-19 06:19:19.326 GMT [7636] user=app_ventas db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authorized: user=app_ventas database=comercial application_name=app-ventas-web
+2026-11-19 06:19:19.332 GMT [7636] user=app_ventas db=comercial app=app-ventas-web client=127.0.0.1 ERROR:  permission denied for schema auditoria at character 13
+2026-11-19 06:19:19.332 GMT [7636] user=app_ventas db=comercial app=app-ventas-web client=127.0.0.1 STATEMENT:  DELETE FROM auditoria.cambios_clientes
+2026-11-19 06:19:19.335 GMT [7636] user=app_ventas db=comercial app=app-ventas-web client=127.0.0.1 LOG:  statement: ALTER TABLE clientes DISABLE TRIGGER trg_auditoria_clientes
+2026-11-19 06:19:19.336 GMT [7636] user=app_ventas db=comercial app=app-ventas-web client=127.0.0.1 ERROR:  must be owner of table clientes
+2026-11-19 06:19:19.336 GMT [7636] user=app_ventas db=comercial app=app-ventas-web client=127.0.0.1 STATEMENT:  ALTER TABLE clientes DISABLE TRIGGER trg_auditoria_clientes
+2026-11-19 06:19:19.337 GMT [7636] user=app_ventas db=comercial app=app-ventas-web client=127.0.0.1 LOG:  disconnection: session time: 0:00:00.031 user=app_ventas database=comercial host=127.0.0.1 port=60622
+2026-11-19 06:19:30.986 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: ALTER TABLE clientes DISABLE TRIGGER trg_auditoria_clientes;
+2026-11-19 06:19:30.998 GMT [15480] user=postgres db=comercial app=psql client=::1 LOG:  statement: ALTER TABLE clientes ENABLE TRIGGER trg_auditoria_clientes;
+2026-11-19 06:20:40.881 GMT [26784] user=[unknown] db=[unknown] app=[unknown] client=127.0.0.1 LOG:  connection received: host=127.0.0.1 port=58092
+2026-11-19 06:20:40.893 GMT [26784] user=soporte_ana db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authenticated: identity="soporte_ana" method=scram-sha-256 (C:/Program Files/PostgreSQL/16/data/pg_hba.conf:115)
+2026-11-19 06:20:40.893 GMT [26784] user=soporte_ana db=comercial app=[unknown] client=127.0.0.1 LOG:  connection authorized: user=soporte_ana database=comercial application_name=psql
+2026-11-19 06:20:40.931 GMT [26784] user=soporte_ana db=comercial app=psql client=127.0.0.1 LOG:  disconnection: session time: 0:00:00.057 user=soporte_ana database=comercial host=127.0.0.1 port=58092
+2026-11-19 06:20:48.573 GMT [15480] user=postgres db=comercial app=psql client=::1 ERROR:  syntax error at or near "psql" at character 1
+2026-11-19 06:20:48.573 GMT [15480] user=postgres db=comercial app=psql client=::1 STATEMENT:  psql -c "SELECT nombre, rfc, telefono FROM clientes WHERE id = 3" "postgresql://soporte_ana:Soporte_Practica_2026@127.0.0.1/comercial"
+	UPDATE clientes SET segmento = 'regular';
+2026-11-19 06:21:37.319 GMT [10928] user= db= app= client= LOG:  checkpoint starting: time
+2026-11-19 06:21:38.766 GMT [10928] user= db= app= client= LOG:  checkpoint complete: wrote 14 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=1.406 s, sync=0.021 s, total=1.447 s; sync files=13, longest=0.014 s, average=0.002 s; distance=4 kB, estimate=2222 kB; lsn=0/593BBA0, redo lsn=0/593BB68
+2026-11-19 06:26:30.548 GMT [8156] user=[unknown] db=[unknown] app=[unknown] client=::1 LOG:  connection received: host=::1 port=63950
+2026-11-19 06:26:33.952 GMT [20300] user=[unknown] db=[unknown] app=[unknown] client=::1 LOG:  connection received: host=::1 port=60963
+2026-11-19 06:26:33.964 GMT [20300] user=postgres db=comercial app=[unknown] client=::1 LOG:  connection authenticated: identity="postgres" method=scram-sha-256 (C:/Program Files/PostgreSQL/16/data/pg_hba.conf:117)
+2026-11-19 06:26:33.964 GMT [20300] user=postgres db=comercial app=[unknown] client=::1 LOG:  connection authorized: user=postgres database=comercial application_name=psql
+
